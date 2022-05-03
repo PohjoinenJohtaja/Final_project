@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import pandas
 
 class Ui_GASEOUS_FUEL(object):
     def setupUi(self, GASEOUS_FUEL):
@@ -187,12 +187,75 @@ class Ui_GASEOUS_FUEL(object):
 
         self.retranslateUi(GASEOUS_FUEL)
         QtCore.QMetaObject.connectSlotsByName(GASEOUS_FUEL)
+
+        def define_proportion():
+            if self.radio_Mass.isChecked():
+                result='M'
+            else: result ='V'
+            return result
+
+        def Getting_data():
+            way = self.lineEdit.text()
+            excel_data_df = pandas.read_excel(way+'.xlsx', sheet_name=way, usecols=['Состав(в %)',
+                'Теплота сгорания(в МДж/м^3)', 'Молярная масса(в г/моль)', 'Доля кислорода'])
+            C = excel_data_df['Состав(в %)'].tolist()
+            Q = excel_data_df['Теплота сгорания(в МДж/м^3)'].tolist()
+            Mi = excel_data_df['Молярная масса(в г/моль)'].tolist()
+            K = excel_data_df['Доля кислорода'].tolist()
+
+            j = 0
+            for i in range(len(Q)):
+                if C[i - j] == '-':
+                    Q.pop(i - j)
+                    C.pop(i - j)
+                    Mi.pop(i - j)
+                    K.pop(i - j)
+                    j += 1
+            for i in range(len(C)):
+                C[i] /= 100
+            return C, Q, Mi, K
+
+
         def calc_V_cal_value():
-            pass
+            C, Q, Mi, K = Getting_data()
+            Qf = 0
+            if define_proportion() == 'V':
+                for i in range(len(Q)):
+                    Qf += Q[i] * C[i]
+            else:
+                M = 0
+                for i in range(len(Q)):
+                    M += C[i] / Mi[i]
+                for i in range(len(Q)):
+                    Qf += Q[i] * C[i] * M * 44.643
+            self.G_Volumetric_result.setText(str(round(Qf, 3))+' МДж/м^3')
+
         def calc_M_cal_value():
-            pass
+            C, Q, Mi, K = Getting_data()
+            Qf = 0
+            if define_proportion() == 'V':
+                M = 0
+                for i in range(len(Q)):
+                    M += C[i] * Mi[i]/1000
+                for i in range(len(Q)):
+                    Qf += Q[i] * C[i] / M / 44.643
+            else:
+                for i in range(len(Q)):
+                    Qf += Q[i] * C[i]
+            self.G_Mass_result.setText(str(round(Qf, 3)) + ' МДж/кг')
+
         def calc_Stoich_ratio():
-            pass
+            C, Q, Mi, K = Getting_data()
+            A = 0
+            M = 0
+            for i in range(max(len(K), len(C))):
+                A += K[i] * C[i]
+            for i in range(max(len(Q), len(C), len(Mi))):
+                M += C[i] * Mi[i]
+            Ma = 2 * A * 16 + 2 * 3.76 * A * 14
+            L0 = Ma / M
+            self.G_Stoichiometric_result.setText(str(round(L0, 3)))
+
         self.G_btn_calc_V.clicked.connect(calc_V_cal_value)
         self.G_btn_calc_M.clicked.connect(calc_M_cal_value)
         self.G_btn_calc_Stoich.clicked.connect(calc_Stoich_ratio)
