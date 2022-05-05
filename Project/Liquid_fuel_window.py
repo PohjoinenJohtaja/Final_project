@@ -172,7 +172,7 @@ class Ui_LIQUID_FUEL(object):
         self.label_4.setGeometry(QtCore.QRect(30, 80, 151, 40))
         font = QtGui.QFont()
         font.setFamily("Rockwell Extra Bold")
-        font.setPointSize(10)
+        font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.label_4.setFont(font)
@@ -181,8 +181,8 @@ class Ui_LIQUID_FUEL(object):
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(180, 80, 201, 40))
         font = QtGui.QFont()
-        font.setFamily("Rockwell")
-        font.setPointSize(10)
+        font.setFamily("Rockwell Extra Bold")
+        font.setPointSize(9)
         self.lineEdit.setFont(font)
         self.lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.lineEdit.setObjectName("lineEdit")
@@ -272,7 +272,7 @@ class Ui_LIQUID_FUEL(object):
         self.Stoichiometric_result.setText(_translate("LIQUID_FUEL", "Стехиометрическое отношение"))
         self.L_btn_calc_V.setText(_translate("LIQUID_FUEL", "РАССЧИТАТЬ"))
         self.L_btn_calc_Stoich.setText(_translate("LIQUID_FUEL", "РАССЧИТАТЬ"))
-        self.label_4.setText(_translate("LIQUID_FUEL", "Месторождение"))
+        self.label_4.setText(_translate("LIQUID_FUEL", "Название таблицы"))
 
 
 

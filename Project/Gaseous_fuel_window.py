@@ -177,7 +177,7 @@ class Ui_GASEOUS_FUEL(object):
         self.label_4.setGeometry(QtCore.QRect(30, 90, 151, 40))
         font = QtGui.QFont()
         font.setFamily("Rockwell Extra Bold")
-        font.setPointSize(10)
+        font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.label_4.setFont(font)
@@ -274,7 +274,7 @@ class Ui_GASEOUS_FUEL(object):
         self.Stoichiometric_result.setText(_translate("GASEOUS_FUEL", "Стехиометрическое отношение"))
         self.G_btn_calc_Stoich.setText(_translate("GASEOUS_FUEL", "РАССЧИТАТЬ"))
         self.G_btn_back.setText(_translate("GASEOUS_FUEL", "НАЗАД"))
-        self.label_4.setText(_translate("GASEOUS_FUEL", "Месторождение"))
+        self.label_4.setText(_translate("GASEOUS_FUEL", "Название таблицы"))
 
 
 
