@@ -192,7 +192,7 @@ class Ui_LIQUID_FUEL(object):
         QtCore.QMetaObject.connectSlotsByName(LIQUID_FUEL)
 
         def define_proportion():
-            if self.radio_Mass.isChecked():
+            if self.L_radio_Mass.isChecked():
                 result='M'
             else: result ='V'
             return result
@@ -214,12 +214,15 @@ class Ui_LIQUID_FUEL(object):
                     C.pop(i - j)
                     Mi.pop(i - j)
                     K.pop(i - j)
+                    p.pop(i - j)
                     j += 1
             for i in range(len(C)):
                 C[i] /= 100
             return C, Q, Mi, p, K
 
         def calc_V_cal_value():
+            pass
+            
             C, Q, Mi, p, K = Getting_data()
             Qf = 0
             if define_proportion() == 'V':
